@@ -1,30 +1,7 @@
-import Std
-
-def abs (n : Int) : Nat := Int.toNat <| if n < 0 then -n else n
-def sgn (n : Int) : Int := if n > 0 then 1 else if n == 0 then 0 else -1
-def Array.sum (a : Array Nat) : Nat := a.foldl (· + ·) 0
-def Array.min (a : Array Nat) : Nat := a.foldl _root_.min a[0]
-def Array.max (a : Array Nat) : Nat := a.foldl _root_.max 0
-
-partial def List.perms [DecidableEq α] : List α → List (List α)
-  | [] => [[]]
-  | as => as.bind (fun a => perms (as.filter (· ≠ a)) |>.bind (fun perm => [a::perm]))
-
-partial def List.windowed : List α → List (α × α)
-  | a::b::cs => (a, b) :: windowed (b::cs)
-  | _ => []
-
-instance : Hashable Char where
-  hash c := hash c.val
-
-structure Wrap (α : Type) where wrap :: val : α
-export Wrap (wrap)
-
-instance [Add α] : Add (Array α) where
-  add as bs := as.zipWith bs Add.add
+import Aoc.Util
 
 partial def main : IO Unit := do
-  let lines ← IO.FS.lines "14.ex"
+  let lines ← IO.FS.lines "Aoc/14.ex"
   let l := lines[0].data
   let mut reassoc := l.foldl (fun m c => if m.contains c then m else m.insert c m.size) Std.HashMap.empty
   if !reassoc.contains 'H' then

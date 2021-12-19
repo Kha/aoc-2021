@@ -1,9 +1,7 @@
-def abs (n : Int) : Nat := Int.toNat <| if n < 0 then -n else n
-def sgn (n : Int) : Int := if n > 0 then 1 else if n == 0 then 0 else -1
-def Array.sum (a : Array Nat) : Nat := a.foldl (· + ·) 0
+import Aoc.Util
 
 #eval show IO _ from do
-  let a ← IO.FS.readFile "7.input"
+  let a ← IO.FS.readFile "Aoc/7.input"
   let a := a.trim.splitOn "," |>.map String.toNat! |>.toArray
   IO.println a
   let mi := a.getMax? (· > ·) |>.get!

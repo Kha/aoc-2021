@@ -1,9 +1,7 @@
-def abs (n : Int) : Nat := Int.toNat <| if n < 0 then -n else n
-def sgn (n : Int) : Int := if n > 0 then 1 else if n == 0 then 0 else -1
-def Array.sum (a : Array Nat) : Nat := a.foldl (· + ·) 0
+import Aoc.Util
 
 #eval show IO _ from do
-  let lines ← IO.FS.lines "4.input"
+  let lines ← IO.FS.lines "Aoc/4.input"
   let drawn := lines[0].splitOn "," |>.map String.toNat! |>.toArray
   let boards := lines[1:] |>.toArray.filter (· ≠ "") |>.map (·.trim.splitOn " " |>.filter (· ≠ "") |>.map String.toNat! |>.toArray)
   let mut max := 0

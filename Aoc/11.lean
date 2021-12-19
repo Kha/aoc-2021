@@ -1,15 +1,7 @@
-def abs (n : Int) : Nat := Int.toNat <| if n < 0 then -n else n
-def sgn (n : Int) : Int := if n > 0 then 1 else if n == 0 then 0 else -1
-def Array.sum (a : Array Nat) : Nat := a.foldl (· + ·) 0
-def Array.min (a : Array Nat) : Nat := a.foldl _root_.min a[0]
-def Array.max (a : Array Nat) : Nat := a.foldl _root_.max 0
-
-partial def List.perms [DecidableEq α] : List α → List (List α)
-  | [] => [[]]
-  | as => as.bind (fun a => perms (as.filter (· ≠ a)) |>.bind (fun perm => [a::perm]))
+import Aoc.Util
 
 partial def main : IO Unit := do
-  let lines ← IO.FS.lines "11.input"
+  let lines ← IO.FS.lines "Aoc/11.input"
   let mut a := lines.map fun line => #[100] ++ line.data.toArray.map (fun c => c.toNat - '0'.toNat) ++ #[100]
   a := #[Array.mkArray a[0].size 100] ++ a ++ #[Array.mkArray a[0].size 100]
   let mut sum := 0

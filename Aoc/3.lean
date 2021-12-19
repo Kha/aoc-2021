@@ -1,9 +1,7 @@
-def abs (n : Int) : Nat := Int.toNat <| if n < 0 then -n else n
-def sgn (n : Int) : Int := if n > 0 then 1 else if n == 0 then 0 else -1
-def Array.sum (a : Array Nat) : Nat := a.foldl (· + ·) 0
+import Aoc.Util
 
 partial def main : IO Unit := do
-  let lines ← IO.FS.lines "3.input"
+  let lines ← IO.FS.lines "Aoc/3.input"
   let common := fun (col : Array Nat) => if (col.filter (· == 0) |>.size) > col.size / 2 then 0 else 1
   let lines := lines.map (fun line => line.data.toArray.map (·.toNat - '0'.toNat))
   dbg_trace lines

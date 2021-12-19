@@ -1,8 +1,7 @@
-def abs (n : Int) : Nat := Int.toNat <| if n < 0 then -n else n
-def sgn (n : Int) : Int := if n > 0 then 1 else if n == 0 then 0 else -1
+import Aoc.Util
 
 #eval show IO _ from do
-  let lines ← IO.FS.lines "5.input"
+  let lines ← IO.FS.lines "Aoc/5.input"
   let lines := lines.map (·.splitOn " -> " |>.toArray.map (·.splitOn "," |>.toArray.map String.toNat!))
   let maxX := 1 + (lines.map (fun l => max l[0][0] l[1][0]) |>.getMax? (· < ·) |>.get!)
   let maxY := 1 + (lines.map (fun l => max l[0][1] l[1][1]) |>.getMax? (· < ·) |>.get!)

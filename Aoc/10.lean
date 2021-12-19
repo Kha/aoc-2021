@@ -1,11 +1,7 @@
-def abs (n : Int) : Nat := Int.toNat <| if n < 0 then -n else n
-def sgn (n : Int) : Int := if n > 0 then 1 else if n == 0 then 0 else -1
-def Array.sum (a : Array Nat) : Nat := a.foldl (· + ·) 0
-def Array.min (a : Array Nat) : Nat := a.foldl _root_.min a[0]
-def Array.max (a : Array Nat) : Nat := a.foldl _root_.max 0
+import Aoc.Util
 
 partial def main : IO Unit := do
-  let lines ← IO.FS.lines "10.input"
+  let lines ← IO.FS.lines "Aoc/10.input"
   let score (s : String) : Option Nat := do
     let mut stack := #[]
     for c in s.data do
