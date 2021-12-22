@@ -3,9 +3,7 @@ import Aoc.Util
 partial def main : IO Unit := do
   let lines ← IO.FS.lines "Aoc/14.ex"
   let l := lines[0].data
-  let mut reassoc := l.foldl (fun m c => if m.contains c then m else m.insert c m.size) Std.HashMap.empty
-  if !reassoc.contains 'H' then
-    reassoc := reassoc.insert 'H' reassoc.size
+  let mut reassoc := lines.toList.bind String.data |>.foldl (fun m c => if !c.isAlpha || m.contains c then m else m.insert c m.size) Std.HashMap.empty
   let l := l.map reassoc.find!
   let m := reassoc.size
   let rules := lines[2:].toArray.map (fun l => l.splitOn " -> " |>.toArray) |>.foldl (fun m r => m.insert (reassoc.find! r[0][0], reassoc.find! r[0][1]) (reassoc.find! r[1][0])) Std.HashMap.empty
