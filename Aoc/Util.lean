@@ -16,6 +16,12 @@ partial def List.windowed : List α → List (α × α)
   | a::b::cs => (a, b) :: windowed (b::cs)
   | _ => []
 
+def Array.windowed (n : Nat) (as : Array α) : Array (Subarray α) := Id.run do
+  let mut r := #[]
+  for i in [0:as.size + 1 - n] do
+    r := r.push as[i:i + n]
+  return r
+
 partial def List.pairs (as : List α) (bs : List β) : List (α × β) :=
   as.bind (fun a => bs.map ((a, ·)))
 
@@ -74,3 +80,13 @@ def cardinals := #[#[1, 0, 0], #[-1, 0, 0], #[0, 1, 0], #[0, -1, 0], #[0, 0, 1],
 
 def Array.foldMap (f : α → Array β) (as : Array α) : Array β :=
   as.map f |>.foldl (· ++ ·) #[]
+
+def Std.Range.all (r : Std.Range) (p : Nat → Bool) : Bool := Id.run do
+  for i in r do
+    if !p i then return false
+  return true
+
+def Subarray.getOp [Inhabited α] (self : Subarray α) (idx : Nat) : α :=
+  self.as[self.start + idx]
+
+def btn (b : Bool) : Nat := if b then 1 else 0
